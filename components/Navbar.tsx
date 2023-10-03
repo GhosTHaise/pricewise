@@ -1,3 +1,4 @@
+import { navIcons } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -24,8 +25,21 @@ const Navbar = () => {
             Price<span className='text-primary'>Wise</span>
           </p>
         </Link>
-        <div>
-          
+        <div
+          className='flex items-center gap-5'
+        >
+          {
+            navIcons.map((icon) => (
+              <Image
+                key={icon.alt}
+                src={icon.src}
+                alt={icon.alt}
+                height={28}
+                width={28}
+                className='object-contain'
+              />
+            ))
+          }
         </div>
       </nav>
     </header>
