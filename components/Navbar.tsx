@@ -36,7 +36,7 @@ const Navbar = () => {
                 alt={icon.alt}
                 height={28}
                 width={28}
-                className='object-contain'
+                className='object-contain cursor-pointer'
               />
             ))
           }
