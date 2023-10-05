@@ -1,7 +1,10 @@
 "use client"
-import React from 'react'
+import  {  useState } from 'react'
 
 const Searchbar = () => {
+
+    const [searchPrompt, setSearchPrompt] = useState("")
+
     const handleSubmit = () => {
 
     }
@@ -15,6 +18,8 @@ const Searchbar = () => {
             type="text" 
             className='searchbar-input' 
             placeholder='Enter product link' 
+            value={searchPrompt}
+            onChange={(e) => setSearchPrompt(e.target.value)}
         />
         <button
             type='submit'
