@@ -1,12 +1,15 @@
 "use client"
-import  {  useState } from 'react'
+import { isValidAmazonUrl } from '@/utils'
+import  {  FormEvent, useState } from 'react'
 
 const Searchbar = () => {
 
     const [searchPrompt, setSearchPrompt] = useState("")
 
-    const handleSubmit = () => {
+    const handleSubmit = (event : FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
+        const isValidLink = isValidAmazonUrl(searchPrompt);
     }
 
   return (
@@ -19,7 +22,7 @@ const Searchbar = () => {
             className='searchbar-input' 
             placeholder='Enter product link' 
             value={searchPrompt}
-            onChange={(e) => setSearchPrompt(e.target.value)}
+            onChange={(e : React.ChangeEvent<HTMLInputElement>) => setSearchPrompt(e.target.value)}
         />
         <button
             type='submit'
