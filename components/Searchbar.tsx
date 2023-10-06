@@ -4,16 +4,28 @@ import  {  FormEvent, useState } from 'react'
 
 const Searchbar = () => {
 
-    const [searchPrompt, setSearchPrompt] = useState("")
+    const [searchPrompt, setSearchPrompt] = useState(""); 
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const isValidLink = isValidAmazonUrl(searchPrompt);
         
-        alert(isValidLink ? "valid link" : "not valid link");
+        //alert(isValidLink ? "valid link" : "not valid link");
 
         if(!isValidLink) return alert("Please provide a valid Amazon link !");
+
+        try {
+            setIsLoading(true);
+
+            //scrape our first content
+        } catch (error) {
+            console.log(error);
+            
+        }finally{
+            setIsLoading(false);
+        }
     }
 
   return (
@@ -31,8 +43,9 @@ const Searchbar = () => {
         <button
             type='submit'
             className='searchbar-btn'
+            disabled={isLoading || searchPrompt === ""}
         >
-            Search
+            {isLoading ? "Searching..."  : "Search"}
         </button>
     </form>
   )
