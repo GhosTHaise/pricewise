@@ -1,3 +1,4 @@
+import { extractPrice } from "@/utils";
 import axios from "axios";
 import * as cheerio from "cheerio";
 
@@ -27,9 +28,23 @@ export async function scrapeAmazonProduct(url : string){
        const $ = cheerio.load(response.data);
 
        //extract the product title
-        const title = $('#productTitle').text().trim();
-       //console.log(response);
-       console.log(title);
+       const title = $('#productTitle').text().trim();
+       const currentPrice = extractPrice(
+            $(".priceToPay span.a-price-whole"),
+            $("a.size.base.a-color-price"),
+            $(".a-button-selected .a-color-base"),
+       );
+        const originalPrice = extractPrice(
+            $("#priceblock_ourprice"),
+            $(".a-price.a-text-price span.a-offscreen"),
+            $(".a-price.a-text-price"),
+            $("#listPrice"),
+            $("#priceblock_dealprice"),
+            $(".a-size-base.a-color-price")
+        );
+
+        const outOfStock = ["currently unvailable","Actuellement indisponible."].includes($("#availability span").text().trim().toLocaleLowerCase());
+       console.log({title,currentPrice,originalPrice,outOfStock});
        
        
     } catch (error : any) {
