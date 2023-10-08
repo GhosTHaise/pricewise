@@ -1,4 +1,4 @@
-import { extractPrice } from "@/utils";
+import { extractCurrency, extractPrice } from "@/utils";
 import axios from "axios";
 import * as cheerio from "cheerio";
 
@@ -45,11 +45,16 @@ export async function scrapeAmazonProduct(url : string){
 
         const outOfStock = ["currently unvailable","Actuellement indisponible."].includes($("#availability span").text().trim().toLocaleLowerCase());
        
-        const image = 
-            $("imgBlkFront").attr("data-a-dynamic-image") ||
-            $("landingImage").attr("data-a-dynamic-image");
+        const images = 
+            $("#imgBlkFront").attr("data-a-dynamic-image") ||
+            $("#landingImage").attr("data-a-dynamic-image") ||
+            "{}"
+            ;
 
-        console.log({title,currentPrice,originalPrice,outOfStock,image});
+        const imageUrls = Object.keys(JSON.parse(images));
+        
+        const currency = extractCurrency($(".a-price-symbole"));
+        console.log({title,currentPrice,originalPrice,outOfStock,images,imageUrls});
        
     } catch (error : any) {
         throw new Error(`Failed to scrape  product : ${error.message}`);

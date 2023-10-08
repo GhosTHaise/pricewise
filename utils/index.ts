@@ -27,3 +27,7 @@ export function extractPrice(...elements : any){
     }
     return "";
 }
+
+export function extractCurrency(element : any){
+
+}
