@@ -1,4 +1,4 @@
-import { extractCurrency, extractPrice } from "@/utils";
+import { extractCurrency, extractDescription, extractPrice } from "@/utils";
 import axios from "axios";
 import * as cheerio from "cheerio";
 
@@ -63,6 +63,7 @@ export async function scrapeAmazonProduct(url : string){
         
         const stars = extractPrice($("#centerCol #averageCustomerReviews #acrPopover .a-size-base.a-color-base"));
         
+        const description = extractDescription($);
         //console.log({title,currentPrice,originalPrice,outOfStock,images,imageUrls,currency,discountRate,category,reviewsCount,stars});
 
         //construct data  object with scraped information
@@ -71,18 +72,22 @@ export async function scrapeAmazonProduct(url : string){
             currency : currency || "$",
             image : imageUrls[0],
             title,
-            currentPrice : Number(currentPrice) || 0,
-            originalPrice : Number(currentPrice) || 0,
+            currentPrice : Number(currentPrice) || Number(originalPrice),
+            originalPrice : Number(currentPrice) || Number(currentPrice),
             priceHistory : [],
             discountRate : Number(discountRate) || 0,
             category,
             reviewsCount : Number(reviewsCount) || 0,
             stars : Number(stars.replace(",",".")) || 0,
-            isOutOfStock : outOfStock
+            isOutOfStock : outOfStock,
+            description,
+            lowestPrice : Number(currentPrice) || Number(originalPrice),
+            highestPrice : Number(originalPrice) || Number(currentPrice),
+            average : Number(currentPrice) || Number(originalPrice),
         }
 
         console.log(data);
-        
+        return data;
        
     } catch (error : any) {
         throw new Error(`Failed to scrape  product : ${error.message}`);
