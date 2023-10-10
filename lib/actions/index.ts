@@ -1,5 +1,8 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
+import { getAveragePrice, getHighestPrice, getLowestPrice } from "@/utils";
+import Product from "../modals/product.modal";
 import { connectToDb } from "../mongoose";
 import { scrapeAmazonProduct } from "../scrapper";
 
@@ -9,10 +12,36 @@ export async function scrapeAndStoreProduct(productUrl : string){
     try {
         await connectToDb()
 
-        const scraperProduct = await scrapeAmazonProduct(productUrl);
+        const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
-        if(!scraperProduct) return ;
+        if(!scrapedProduct) return ;
 
+        let product = scrapedProduct;
+
+        const existingProduct = await Product.findOne({
+            url : scrapedProduct.url
+        });
+
+        if(existingProduct){
+            const updatedPriceHistory : any = [
+                ...existingProduct.priceHistory,
+                { price : scrapedProduct.currentPrice }
+            ]
+
+            product  = {
+                ...scrapedProduct,
+                priceHistory : updatedPriceHistory,
+                lowestPrice : getLowestPrice(updatedPriceHistory),
+                highestPrice : getHighestPrice(updatedPriceHistory),
+                averagePrice : getAveragePrice(updatedPriceHistory) 
+            }
+        }
+        const newProduct = await Product.findOneAndUpdate(
+                {url : scrapedProduct.url},
+                product,
+                {upsert : true,new : true}
+        );
+        revalidatePath(`/products/${newProduct._id}`);
     } catch (error : any) {
         throw new Error(`Failed to create/update product : ${error.message}`)
     }

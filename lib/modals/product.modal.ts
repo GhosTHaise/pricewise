@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
@@ -24,5 +25,9 @@ const productSchema = new mongoose.Schema({
          {
             email : {type : String, required : true}, 
          }
-    ],default : []
-})
+    ],default : [],
+},{ timestamps : true });
+
+const Product = mongoose.models.Product || mongoose.model("Product",productSchema);
+
+export default Product;
