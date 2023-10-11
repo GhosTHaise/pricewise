@@ -41,8 +41,23 @@ export async function scrapeAndStoreProduct(productUrl : string){
                 product,
                 {upsert : true,new : true}
         );
+
         revalidatePath(`/products/${newProduct._id}`);
     } catch (error : any) {
         throw new Error(`Failed to create/update product : ${error.message}`)
+    }
+}
+
+export async function grtProductById(productId : string){
+    try {
+        connectToDb();
+
+        const product = await Product.findOne({_id : productId});
+        
+        if(!product) return ;
+
+        return product;
+    } catch (error) {
+        console.log(error);
     }
 }
