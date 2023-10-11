@@ -48,7 +48,7 @@ export async function scrapeAndStoreProduct(productUrl : string){
     }
 }
 
-export async function grtProductById(productId : string){
+export async function getProductById(productId : string){
     try {
         connectToDb();
 
@@ -57,6 +57,20 @@ export async function grtProductById(productId : string){
         if(!product) return ;
 
         return product;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function getAllProducts(){
+    try {
+        connectToDb();
+
+        const products = await Product.find();
+
+        if(!products) return ;
+
+        return products;
     } catch (error) {
         console.log(error);
     }

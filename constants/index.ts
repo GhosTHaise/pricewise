@@ -3,15 +3,15 @@ export const navIcons : {
     alt : string;
 }[] = [
     {
-        src : "assets/icons/search.svg",
+        src : "/assets/icons/search.svg",
         alt : "search"
     },
     {
-        src : "assets/icons/black-heart.svg",
+        src : "/assets/icons/black-heart.svg",
         alt : "heart"
     },
     {
-        src : "assets/icons/user.svg",
+        src : "/assets/icons/user.svg",
         alt : "user"
     }
 ]
