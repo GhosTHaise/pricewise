@@ -49,8 +49,27 @@ const ProductDetails = async ({params : {id}} : Props) => {
                     href={product.url}
                     target='_blank'
                   >
-                    Visit Product
+                    Visit Product 
                   </Link>
+              </div>
+
+              <div
+                className='flex items-center gap-3'
+              >
+                <div
+                  className='product-hearts'
+                >
+                  <Image
+                    src="/assets/icons/red-heart.svg"
+                    alt='heart'
+                    width={20}
+                    height={20}
+                  />
+
+                  <p className='text-base font-semibold text-[#D46F77]'>
+                      {product.reviewsCount}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

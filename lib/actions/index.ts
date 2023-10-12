@@ -36,6 +36,8 @@ export async function scrapeAndStoreProduct(productUrl : string){
                 averagePrice : getAveragePrice(updatedPriceHistory) 
             }
         }
+        console.log(product);
+        
         const newProduct = await Product.findOneAndUpdate(
                 {url : scrapedProduct.url},
                 product,
