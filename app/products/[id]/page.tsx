@@ -1,5 +1,6 @@
 import { getProductById } from '@/lib/actions';
 import { Product } from '@/types';
+import { formatNumber } from '@/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -70,7 +71,45 @@ const ProductDetails = async ({params : {id}} : Props) => {
                       {product.reviewsCount}
                   </p>
                 </div>
+
+                <div
+                  className='p-2 bg-white-200 rounded-10'
+                >
+                  <Image
+                    src="/assets/icons/bookmark.svg"
+                    alt='bookmark'
+                    width={20}
+                    height={20}
+                  />
+                </div>
+                <div
+                  className='p-2 bg-white-200 rounded-10'
+                >
+                  <Image
+                    src="/assets/icons/share.svg"
+                    alt='share'
+                    width={20}
+                    height={20}
+                  />
+                </div>
               </div>
+            </div>
+
+            <div
+              className='product-info'
+            >
+                <div
+                  className='flex flex-col gap-2'
+                >
+                  <p 
+                    className='text-[34px] text-secondary font-bold'>
+                    {product.currency} {formatNumber(product.currentPrice)}
+                  </p>
+                  <p 
+                    className='text-[21px] text-black opacity-50 line-through'>
+                    {product.currency} {formatNumber(product.originalPrice)}
+                  </p>
+                </div>
             </div>
           </div>
         </div>
