@@ -147,6 +147,16 @@ const ProductDetails = async ({params : {id}} : Props) => {
                         </p>
                     </div>
                   </div>
+
+                  <p 
+                    className='text-sm text-black opacity-50'
+                  >
+                    <span 
+                      className='text-primary-green font-semibold'
+                    >
+                        93% 
+                    </span> of buyers have recommended this. 
+                  </p>
                 </div>
             </div>
           </div>
