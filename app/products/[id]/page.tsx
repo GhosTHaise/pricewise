@@ -168,10 +168,28 @@ const ProductDetails = async ({params : {id}} : Props) => {
                 className='flex gap-5 flex-wrap'
               >
                 <PriceInfoCard
-                  title="currentPrice"
+                  title="Current Price"
                   iconSrc="/assets/icons/price-tag.svg"
                   value={`${product.currency} ${formatNumber(product.currentPrice)}`}
                   borderColor="#b6dbff"
+                />
+                <PriceInfoCard
+                  title="Average Price"
+                  iconSrc="/assets/icons/chart.svg"
+                  value={`${product.currency} ${formatNumber(product.averagePrice)}`}
+                  borderColor="#A686fc"
+                />
+                <PriceInfoCard
+                  title="Highest Price"
+                  iconSrc="/assets/icons/arrow-up.svg"
+                  value={`${product.currency} ${formatNumber(product.highestPrice)}`}
+                  borderColor="#FCC"
+                />
+                <PriceInfoCard
+                  title="Lowest Price"
+                  iconSrc="/assets/icons/arrow-down.svg"
+                  value={`${product.currency} ${formatNumber(product.lowestPrice)}`}
+                  borderColor="#AFF8B6"
                 />
               </div>
             </div>
