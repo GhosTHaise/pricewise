@@ -1,3 +1,4 @@
+import PriceInfoCard from '@/components/cards/PriceInfoCard';
 import { getProductById } from '@/lib/actions';
 import { Product } from '@/types';
 import { formatNumber } from '@/utils';
@@ -158,6 +159,21 @@ const ProductDetails = async ({params : {id}} : Props) => {
                     </span> of buyers have recommended this. 
                   </p>
                 </div>
+            </div>
+
+            <div
+              className='my-7 flex flex-col gap-5'
+            >
+              <div
+                className='flex gap-5 flex-wrap'
+              >
+                <PriceInfoCard
+                  title="currentPrice"
+                  iconSrc="/assets/icons/price-tag.svg"
+                  value={`${product.currency} ${formatNumber(product.currentPrice)}`}
+                  borderColor="#b6dbff"
+                />
+              </div>
             </div>
           </div>
         </div>
