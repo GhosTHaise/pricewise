@@ -1,5 +1,6 @@
 import PriceInfoCard from '@/components/cards/PriceInfoCard';
-import { getProductById } from '@/lib/actions';
+import ProductCard from '@/components/cards/ProductCard';
+import { getProductById, getSimilarProduct } from '@/lib/actions';
 import { Product } from '@/types';
 import { formatNumber } from '@/utils';
 import Image from 'next/image';
@@ -18,6 +19,8 @@ const ProductDetails = async ({params : {id}} : Props) => {
   const product : Product = await getProductById(id);
 
   if(!product) redirect("/");
+
+  const similarProducts = await getSimilarProduct(id);
 
   return (
     <div className='product-container'>
@@ -223,8 +226,45 @@ const ProductDetails = async ({params : {id}} : Props) => {
               height={22}
               width={22}
              />
+
+             <Link
+                href="/"
+                className='text-base text-white'
+             >
+                Buy Now 
+             </Link>
           </button>
         </div>
+
+        {
+          similarProducts
+          &&
+          similarProducts?.length > 0
+          &&
+          (
+            <div
+              className='py-14 flex flex-col gap-2 w-full'
+            >
+              <p
+                className='section-text'
+              >
+                  Similar Products
+              </p>
+              <div
+                className='flex flex-wrap gap-10 mt-7 w-full'
+              >
+                  {
+                    similarProducts.map((similarProduct : Product) => (
+                      <ProductCard
+                        key={similarProduct._id}
+                        product={similarProduct}
+                      />
+                    ))
+                  }
+              </div>
+            </div>
+          )
+        }
     </div>
   )
 }
