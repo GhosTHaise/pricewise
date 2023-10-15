@@ -4,8 +4,15 @@ import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 
 const Modal = () => {
-  
+  //State
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [email, setEmail] = useState("")
   let [isOpen, setIsOpen] = useState(true)
+  
+  //
+  const handleSubmit = async () => {
+
+  }
   return (
     <>
         <button
@@ -97,6 +104,7 @@ const Modal = () => {
 
                                 <form
                                     className='flex flex-col mt-5'
+                                    onSubmit={handleSubmit}
                                 >
                                     <label 
                                         htmlFor="email"
@@ -117,6 +125,8 @@ const Modal = () => {
                                             type="text" 
                                             required 
                                             id="email"
+                                            value={email}
+                                            onChange={(e : React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                                             placeholder='contact@ghost.com'    
                                             className='dialog-input'
                                         />
