@@ -10,8 +10,22 @@ const Modal = () => {
   let [isOpen, setIsOpen] = useState(true)
   
   //
-  const handleSubmit = async () => {
-
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+  const handleSubmit = async (e : React.FormEvent) => {
+    e.preventDefault();
+    try {
+        setIsSubmitting(true)
+        
+        //await addUserEmailToProduct(productId,email);
+        setEmail("");
+        closeModal();
+    } catch (error : any) {
+        console.log(error);
+    }finally{
+        setIsSubmitting(true)
+    }
   }
   return (
     <>
@@ -29,7 +43,7 @@ const Modal = () => {
         >
             <Dialog 
                 as="div" 
-                onClose={() => setIsOpen(false)}
+                onClose={() => closeModal()}
                 className="dialog-container"    
             >
                 <div
@@ -87,7 +101,7 @@ const Modal = () => {
                                         width={24}
                                         height={24}
                                         className='cursor-pointer'
-                                        onClick={() => setIsOpen(false)}    
+                                        onClick={() => closeModal()}    
                                     />
                                 </div>
                                 <h4
@@ -134,8 +148,11 @@ const Modal = () => {
                                     <button
                                         type='submit'
                                         className='dialog-btn'
+                                        disabled={isSubmitting}
                                     >
-                                        Track
+                                        {
+                                            isSubmitting ? "Submitting..." : "Track"
+                                        }
                                     </button>
                                 </form>
                             </div>
