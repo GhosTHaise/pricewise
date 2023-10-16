@@ -1,7 +1,9 @@
-import { EmailProductInfo, NotificationType } from "@/types";
+"use server"
+
+import { EmailContent, EmailProductInfo, NotificationType } from "@/types";
 import nodemailer from "nodemailer";
 
-export const Notification = {
+const Notification = {
     WELCOME : "WELCOME",
     CHANGE_OF_STOCK : "CHANGE_OF_STOCK",
     LOWEST_PRICE : "LOWEST_PRICE",
@@ -74,6 +76,33 @@ export async function generateEmailBody(
       default:
         throw new Error("Invalid notification type.");
     }
-  
+ 
     return { subject, body };
-  }
+}
+
+const transporter = nodemailer.createTransport({
+    pool : true,
+    service : "hotmail",
+    port : 2525,
+    auth : {
+        user : process.env.NEXT_EMAIL_AUTH_USER,
+        pass : process.env.NEXT_EMAIL_AUTH_PASS
+    },
+    maxConnections : 1
+});
+
+export const sendEmail = async (emailContent  : EmailContent,sendTo : string[]) => {
+    const mailOptions = {
+        from : process.env.NEXT_EMAIL_AUTH_USER,
+        to : sendTo,
+        html : emailContent.body,
+        subject : emailContent.subject
+    }
+
+    transporter.sendMail(mailOptions,(error : any,info : any) => {
+        if(error) return console.log(error);
+        
+        console.log("Email sent : ",info);
+        
+    });
+}

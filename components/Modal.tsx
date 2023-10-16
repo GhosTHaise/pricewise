@@ -2,8 +2,12 @@
 import { useState , Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
+import { addUserEmailToProduct } from '@/lib/actions'
 
-const Modal = () => {
+interface Props {
+    productId : string;
+}
+const Modal = ({productId} : Props) => {
   //State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState("")
@@ -18,7 +22,7 @@ const Modal = () => {
     try {
         setIsSubmitting(true)
         
-        //await addUserEmailToProduct(productId,email);
+        await addUserEmailToProduct(productId,email);
         setEmail("");
         closeModal();
     } catch (error : any) {

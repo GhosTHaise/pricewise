@@ -6,6 +6,7 @@ import Product from "../modals/product.modal";
 import { connectToDb } from "../mongoose";
 import { scrapeAmazonProduct } from "../scrapper";
 import { User } from "@/types";
+import { generateEmailBody, sendEmail } from "../nodemailer";
 
 export async function scrapeAndStoreProduct(productUrl : string){
     if(!productUrl) return;
@@ -109,10 +110,12 @@ export async function addUserEmailToProduct(productId : string,userEmail : strin
         const userExists = product.users.some((user : User) =>  user.email === userEmail);
 
         if(!userExists){
-            product.user.push({ email : userEmail});
+            product.users.push({ email : userEmail});
             await product.save();
 
-            // /const emailContent = generateEmailBody(product, "WELCOME");
+            const emailContent = await generateEmailBody(product, "WELCOME");
+
+            await sendEmail(emailContent,[userEmail]);
         }
     } catch (error) {
         console.log(error);
