@@ -99,6 +99,8 @@ export async function getSimilarProduct(productId : string){
 }
 
 export async function addUserEmailToProduct(productId : string,userEmail : string){
+    console.log("Prepare Email !");
+    
     try {
         connectToDb();
         
@@ -114,7 +116,7 @@ export async function addUserEmailToProduct(productId : string,userEmail : strin
             await product.save();
 
             const emailContent = await generateEmailBody(product, "WELCOME");
-
+            console.log("Sending Email !");
             await sendEmail(emailContent,[userEmail]);
         }
     } catch (error) {
