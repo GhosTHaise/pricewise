@@ -17,7 +17,8 @@
     "nodemailer": "^6.9.6",
     "react": "latest",
     "react-dom": "latest",
-    "react-responsive-carousel": "^3.2.23"
+    "react-responsive-carousel": "^3.2.23",
+    "supports-color": "^9.4.0"
   },
   "devDependencies": {
     "@types/node": "latest",
