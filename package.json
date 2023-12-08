@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@sentry/nextjs": "^7.86.0",
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "mongoose": "^7.6.0",

@@ -93,10 +93,6 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async (emailContent  : EmailContent,sendTo : string[]) => {
     try {
-      console.log({
-        user : process.env.NEXT_EMAIL_AUTH_USER,
-        pass : process.env.NEXT_EMAIL_AUTH_PASS
-    });
       
         const mailOptions = {
           from : process.env.NEXT_EMAIL_AUTH_USER,
@@ -112,7 +108,6 @@ export const sendEmail = async (emailContent  : EmailContent,sendTo : string[]) 
           
       });
     } catch (error) {
-      console.log(error);
-      
+      console.log(error); 
     }
 }
